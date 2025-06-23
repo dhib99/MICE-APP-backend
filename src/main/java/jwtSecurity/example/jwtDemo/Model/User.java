@@ -96,6 +96,9 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
+
     @Column(nullable = false)
     private String password;
 

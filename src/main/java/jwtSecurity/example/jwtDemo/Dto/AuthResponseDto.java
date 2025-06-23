@@ -7,4 +7,5 @@ public class AuthResponseDto {
 
     private String accessToken;
     private Long userId;
+
 }
