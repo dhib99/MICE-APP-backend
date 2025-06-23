@@ -81,7 +81,21 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
 
+    public void setModificationDate(LocalDateTime modificationDate) {
+        this.modificationDate = modificationDate;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
     @Column(nullable = false)
     private String password;
 
