@@ -28,18 +28,27 @@ pipeline {
         }
     }
 
-    post {
-           always {
-               junit '**/target/surefire-reports/*.xml'
-               echo 'Pipeline terminé.'
-           }
-           success {
-               echo 'Build réussie!'
-                     mail(to: 'selimdhibmillioman@gmail.com', subject: 'Build reussie', body: 'Voir Jenkins')
-           }
-           failure {
-               echo 'Build échouée.'
-                mail(to: 'selimdhibmillioman@gmail.com', subject: 'Build échouée', body: 'Voir Jenkins')
-           }
+post {
+    always {
+        junit '**/target/surefire-reports/*.xml'
+        echo 'Pipeline terminé.'
     }
+    success {
+        echo 'Build réussie!'
+        emailext (
+            to: 'selimdhibmillioman@gmail.com',
+            subject: "Build réussie: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: "Voir les détails sur Jenkins: ${env.BUILD_URL}"
+        )
+    }
+    failure {
+        echo 'Build échouée.'
+        emailext (
+            to: 'selimdhibmillioman@gmail.com',
+            subject: "Build échouée: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: "Voir les détails sur Jenkins: ${env.BUILD_URL}"
+        )
+    }
+}
+
 }
