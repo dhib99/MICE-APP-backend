@@ -29,8 +29,16 @@ pipeline {
     }
 
     post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
-        }
+           always {
+               junit '**/target/surefire-reports/*.xml'
+               echo 'Pipeline terminé.'
+           }
+           success {
+               echo 'Build réussie!'
+           }
+           failure {
+               echo 'Build échouée.'
+               // mail(to: 'selimdhibmillioman@gmail.com', subject: 'Build échouée', body: 'Voir Jenkins')
+           }
     }
 }
