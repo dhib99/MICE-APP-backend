@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/opt/homebrew/Cellar/maven/3.9.9/libexec/bin:$PATH"
+    }
+
     stages {
         stage('Build') {
             steps {
