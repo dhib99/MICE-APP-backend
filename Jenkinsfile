@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        // Modifie ce chemin selon l’emplacement de ta commande mvn
+        PATH = "/opt/homebrew/bin:${env.PATH}"
+    }
+
     stages {
         stage('Build') {
             steps {
