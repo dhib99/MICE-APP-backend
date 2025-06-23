@@ -35,10 +35,11 @@ pipeline {
            }
            success {
                echo 'Build réussie!'
+                     mail(to: 'selimdhibmillioman@gmail.com', subject: 'Build reussie', body: 'Voir Jenkins')
            }
            failure {
                echo 'Build échouée.'
-               // mail(to: 'selimdhibmillioman@gmail.com', subject: 'Build échouée', body: 'Voir Jenkins')
+                mail(to: 'selimdhibmillioman@gmail.com', subject: 'Build échouée', body: 'Voir Jenkins')
            }
     }
 }
