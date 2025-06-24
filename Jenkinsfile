@@ -20,6 +20,17 @@ pipeline {
             }
         }
 
+        stage('Exporter résultats de test') {
+            steps {
+                echo '📄 Extraction des résultats de test...'
+                // Extrait le résumé des tests depuis les fichiers Surefire
+                sh '''
+                    PASSES=$(grep -o 'Tests run:.*Failures: 0, Errors: 0, Skipped: 0' target/surefire-reports/*.txt || true)
+                    echo "$PASSES" > resultats_test.txt
+                '''
+            }
+        }
+
         stage('Package') {
             steps {
                 echo '📦 Création du package...'
@@ -29,9 +40,7 @@ pipeline {
 
         stage('Générer fichier') {
             steps {
-                echo '📄 Génération du fichier texte...'
                 sh 'echo "Build terminé avec succès le $(date)" > mon_fichier.txt'
-                sh 'ls -l mon_fichier.txt' // Pour vérifier l'existence
             }
         }
     }
@@ -41,10 +50,10 @@ pipeline {
             emailext(
                 subject: '✅ Build réussi',
                 body: '''<p>Le build s'est terminé avec succès.</p>
-<p>Voir les détails sur Jenkins : <a href="$BUILD_URL">$BUILD_URL</a></p>''',
+                <p>Voir les détails sur Jenkins : <a href="$BUILD_URL">$BUILD_URL</a></p>''',
                 mimeType: 'text/html',
                 to: 'selimdhibmillioman@gmail.com',
-                attachmentsPattern: '**/mon_fichier.txt'
+                attachmentsPattern: '**/mon_fichier.txt, **/resultats_test.txt'
             )
         }
 
@@ -58,7 +67,6 @@ pipeline {
         }
 
         always {
-            echo '🧪 Publication des résultats de test...'
             junit '**/target/surefire-reports/*.xml'
             echo '📬 Pipeline terminé.'
         }
