@@ -34,24 +34,28 @@ post {
         echo 'Pipeline terminé.'
     }
    post {
-       success {
-           emailext(
-               subject: '✅ Build réussi',
-               body: '''<p>Le build s'est terminé avec succès.</p>
-   <p>Voir les détails sur Jenkins : <a href="$BUILD_URL">$BUILD_URL</a></p>''',
-               mimeType: 'text/html',
-               to: 'selimdhibmillioman@gmail.com',
-               attachmentsPattern: '**/mon_fichier.txt'
-           )
-       }
-    failure {
-        echo 'Build échouée.'
-        emailext (
-            to: 'selimdhibmillioman@gmail.com',
-            subject: "Build échouée: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: "Voir les détails sur Jenkins: ${env.BUILD_URL}"
-        )
-    }
-}
+          success {
+              emailext(
+                  subject: '✅ Build réussi',
+                  body: '''<p>Le build s'est terminé avec succès.</p>
+  <p>Voir les détails sur Jenkins : <a href="$BUILD_URL">$BUILD_URL</a></p>''',
+                  mimeType: 'text/html',
+                  to: 'selimdhibmillioman@gmail.com',
+                  attachmentsPattern: 'mon_fichier.txt'
+              )
+          }
 
-}
+          failure {
+              echo '❌ Build échouée.'
+              emailext(
+                  to: 'selimdhibmillioman@gmail.com',
+                  subject: "Build échouée: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                  body: "Voir les détails sur Jenkins: ${env.BUILD_URL}"
+              )
+          }
+
+          always {
+              echo '📬 Notification traitée.'
+          }
+      }
+  }
