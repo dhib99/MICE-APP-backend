@@ -33,14 +33,17 @@ post {
         junit '**/target/surefire-reports/*.xml'
         echo 'Pipeline terminé.'
     }
-    success {
-        echo 'Build réussie!'
-        emailext (
-            to: 'selimdhibmillioman@gmail.com',
-            subject: "Build réussie: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: "Voir les détails sur Jenkins: ${env.BUILD_URL}"
-        )
-    }
+   post {
+       success {
+           emailext(
+               subject: '✅ Build réussi',
+               body: '''<p>Le build s'est terminé avec succès.</p>
+   <p>Voir les détails sur Jenkins : <a href="$BUILD_URL">$BUILD_URL</a></p>''',
+               mimeType: 'text/html',
+               to: 'selimdhibmillioman@gmail.com',
+               attachmentsPattern: '**/mon_fichier.txt'
+           )
+       }
     failure {
         echo 'Build échouée.'
         emailext (
