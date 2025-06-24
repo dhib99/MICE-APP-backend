@@ -26,6 +26,14 @@ pipeline {
                 sh 'mvn package'
             }
         }
+
+        stage('Générer fichier') {
+            steps {
+                echo '📄 Génération du fichier texte...'
+                sh 'echo "Build terminé avec succès le $(date)" > mon_fichier.txt'
+                sh 'ls -l mon_fichier.txt' // Pour vérifier l'existence
+            }
+        }
     }
 
     post {
@@ -36,7 +44,7 @@ pipeline {
 <p>Voir les détails sur Jenkins : <a href="$BUILD_URL">$BUILD_URL</a></p>''',
                 mimeType: 'text/html',
                 to: 'selimdhibmillioman@gmail.com',
-                attachmentsPattern: 'mon_fichier.txt'
+                attachmentsPattern: '**/mon_fichier.txt'
             )
         }
 
@@ -50,6 +58,7 @@ pipeline {
         }
 
         always {
+            echo '🧪 Publication des résultats de test...'
             junit '**/target/surefire-reports/*.xml'
             echo '📬 Pipeline terminé.'
         }
