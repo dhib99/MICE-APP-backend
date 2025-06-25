@@ -31,12 +31,11 @@ jobs:
       - name: Build (skip tests)
         run: mvn clean install -DskipTests=true
 
-      - name: SonarQube Scan
+      - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          mvn sonar:sonar \
-            -Dsonar.projectKey=selim-dhib_jwtDemo \
-            -Dsonar.organization=selim-dhib \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=$SONAR_TOKEN
+        run: mvn sonar:sonar \
+          -Dsonar.projectKey=dhib99_MICE-APP-backend \
+          -Dsonar.organization=dhib99 \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=$SONAR_TOKEN
