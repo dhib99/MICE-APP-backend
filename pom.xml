@@ -96,9 +96,15 @@
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<groupId>org.sonarsource.scanner.maven</groupId>
+							<artifactId>sonar-maven-plugin</artifactId>
 						</exclude>
 					</excludes>
 				</configuration>
+
+
+
+
 			</plugin>
 		</plugins>
 	</build>
