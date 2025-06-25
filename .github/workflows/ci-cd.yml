@@ -31,7 +31,6 @@ jobs:
       - name: Build (skip tests)
         run: mvn clean install -DskipTests=true
 
-
       - name: SonarQube Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -39,4 +38,4 @@ jobs:
           -Dsonar.projectKey=ton-projet-key \
           -Dsonar.organization=ton-organisation \
           -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=$SONAR_TOKEN
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
