@@ -34,8 +34,9 @@ jobs:
       - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn sonar:sonar \
-          -Dsonar.projectKey=dhib99_MICE-APP-backend \
-          -Dsonar.organization=dhib99 \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=$SONAR_TOKEN
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=dhib99_MICE-APP-backend \
+            -Dsonar.organization=dhib99 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN
